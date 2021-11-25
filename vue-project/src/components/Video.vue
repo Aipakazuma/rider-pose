@@ -65,6 +65,9 @@ export default {
         mimeType: "video/webm; codecs=vp8",
       });
 
+      // clear
+      this.recordedChunks = [];
+
       // availableイベントでメディア記録を保持
       this.mediaRecorder.ondataavailable = (event) =>
         this.recordedChunks.push(event.data);
