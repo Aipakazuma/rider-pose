@@ -1,16 +1,16 @@
 <template>
   <p>
     カメラ:
-    <select v-model="selectedVideo" @change="onChange">
-      <option disabled value="">Please select one</option>
-      <option
+    <el-select v-model="selectedVideo" @change="onChange">
+      <el-option disabled value="">Please select one</el-option>
+      <el-option
         v-for="(video, key, index) in videos"
         v-bind:key="index"
         :value="video.value"
       >
         {{ video.text }}
-      </option>
-    </select>
+      </el-option>
+    </el-select>
   </p>
 </template>
 

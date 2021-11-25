@@ -1,23 +1,38 @@
 <template>
-  <div>
-    <CameraSelect v-on:connectLocalCamera="connectLocalCamera" />
-    <video
-      v-bind:srcObject.prop="stream"
-      muted="true"
-      width="500"
-      autoplay
-      playsinline
-    ></video>
-    <div v-if="isPossibleRecord">
-      <button v-on:click="startRecording">録画する</button>
-    </div>
-    <div v-else>
-      <button v-on:click="stopRecording">録画を終了する</button>
-    </div>
-    <button v-if="isPossibleDownload" v-on:click="downloadVideo">
-      ダウンロードする
-    </button>
-  </div>
+  <el-container>
+    <el-header>Header</el-header>
+    <el-container>
+      <el-aside width="200px">
+        <CameraSelect v-on:connectLocalCamera="connectLocalCamera" />
+        <div v-if="isPossibleRecord">
+          <el-button type="primary" v-on:click="startRecording">
+            録画する
+          </el-button>
+        </div>
+        <div v-else>
+          <el-button type="info" v-on:click="stopRecording"
+            >録画を終了する</el-button
+          >
+        </div>
+        <el-button
+          type="primary"
+          v-if="isPossibleDownload"
+          v-on:click="downloadVideo"
+        >
+          ダウンロードする
+        </el-button>
+      </el-aside>
+      <el-main>
+        <video
+          v-bind:srcObject.prop="stream"
+          muted="true"
+          width="500"
+          autoplay
+          playsinline
+        ></video>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
