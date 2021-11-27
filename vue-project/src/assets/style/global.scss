@@ -1,5 +1,16 @@
 @charset "utf-8";
 
+@import "_reset.scss";
+
+body {
+  font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック',YuGothic,'Yu Gothic','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic',sans-serif;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+}
+
 .el-row {
     margin-bottom: 20px;
     &:last-child {
