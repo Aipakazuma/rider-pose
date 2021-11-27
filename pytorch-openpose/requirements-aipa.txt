@@ -1,0 +1,11 @@
+numpy
+matplotlib
+opencv-python
+scipy
+scikit-image
+tqdm
+torch
+torchvision
+fastapi
+uvicorn[standard]
+python-multipart
