@@ -3,30 +3,50 @@
     <el-header>Header</el-header>
     <el-container>
       <el-aside width="200px">
-        <CameraSelect v-on:connectLocalCamera="connectLocalCamera" />
-        <div v-if="isPossibleRecord">
-          <el-button type="primary" v-on:click="startRecording">
-            録画する
-          </el-button>
-        </div>
-        <div v-else>
-          <el-button type="info" v-on:click="stopRecording"
-            >録画を終了する</el-button
-          >
-        </div>
-        <el-button
-          type="primary"
-          v-if="isPossibleDownload"
-          v-on:click="downloadVideo"
-        >
-          ダウンロードする
-        </el-button>
+        <el-row>
+          <el-col>
+            <CameraSelect v-on:connectLocalCamera="connectLocalCamera" />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col v-if="isPossibleRecord">
+            <el-button type="primary" v-on:click="startRecording">
+              録画する
+            </el-button>
+          </el-col>
+          <el-col v-else>
+            <el-button type="info" v-on:click="stopRecording"
+              >録画を終了する</el-button
+            >
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-button
+              type="primary"
+              v-if="isPossibleDownload"
+              v-on:click="downloadVideo"
+            >
+              ダウンロードする
+            </el-button>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-button
+              type="success"
+              v-if="isPossibleDownload"
+              v-on:click="postVideo"
+            >
+              サーバへ保存する
+            </el-button>
+          </el-col>
+        </el-row>
       </el-aside>
       <el-main>
         <video
           v-bind:srcObject.prop="stream"
           muted="true"
-          width="500"
           autoplay
           playsinline
         ></video>
@@ -35,8 +55,18 @@
   </el-container>
 </template>
 
+<style lang="scss">
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+</style>
+
 <script>
 import CameraSelect from "./CameraSelect.vue";
+import axios from "axios";
 
 export default {
   name: "Video",
@@ -83,9 +113,6 @@ export default {
       this.isPossibleRecord = !this.isPossibleRecord;
     },
     downloadVideo: function () {
-      /* eslint-disable */
-      debugger;
-      /* eslint-enable */
       const blob = new Blob(this.recordedChunks, { type: "video/webm" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -96,6 +123,19 @@ export default {
       window.URL.revokeObjectURL(url);
 
       console.log("Video download");
+    },
+    postVideo: function () {
+      const blob = new Blob(this.recordedChunks, { type: "video/webm" });
+      const url =
+        "https://adrwly0e6a.execute-api.ap-northeast-1.amazonaws.com/AipaTest";
+      axios
+        .post(url, blob)
+        .then(function (response) {
+          console.log("success", response);
+        })
+        .catch(function (error) {
+          console.log("errro", error);
+        });
     },
   },
   computed: {
