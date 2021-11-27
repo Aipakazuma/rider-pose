@@ -3,6 +3,7 @@ import copy
 import numpy as np
 import torch
 from fastapi import FastAPI, File, UploadFile
+from starlette.middleware.cors import CORSMiddleware
 from PIL import Image
 
 from src import util
@@ -104,9 +105,15 @@ def main(body):
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"])
 
 
-@app.post('/video')
+@ app.post('/video')
 def post_video(video_data: UploadFile = File(...)):
     body = video_data.file.read()
     main(body)
