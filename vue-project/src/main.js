@@ -1,6 +1,7 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 
-createApp(App).use(ElementPlus).mount('#app')
+require('@/assets/style/global.scss');
+createApp(App).use(ElementPlus).mount('#app');
